@@ -4,32 +4,14 @@ public class Player : MonoBehaviour
 {
     // Expose private attribute to editor only for development purposes
     [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private GameInput gameInput;
 
     private bool isWalking;
 
-    private void Update() { 
+    private void Update() 
+    {
         // Keep logic separated
-        // Get input
-        Vector2 inputVector = new Vector2(0,0);
-
-        // Legacy input manger
-        if (Input.GetKey(KeyCode.W)) {
-            inputVector.y += 1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            inputVector.x -= 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            inputVector.y -= 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            inputVector.x += 1;
-        }
-
-        inputVector = inputVector.normalized;
+        Vector2 inputVector = gameInput.GetMovemnetVectorNormalised();
 
         // Move the player
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
@@ -43,7 +25,8 @@ public class Player : MonoBehaviour
         Debug.Log(inputVector);
     }
 
-    public bool IsWalking() {
+    public bool IsWalking() 
+    {
         return isWalking;
     }
 }
