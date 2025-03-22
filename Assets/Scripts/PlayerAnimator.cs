@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour 
-{
+public class PlayerAnimator : MonoBehaviour {
     // Separate animation from logic
 
     private const string IS_WALKING = "IsWalking";
