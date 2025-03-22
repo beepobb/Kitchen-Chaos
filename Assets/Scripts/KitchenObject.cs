@@ -12,6 +12,7 @@ public class KitchenObject : MonoBehaviour {
 
     public void SetClearCounter(ClearCounter clearCounter) {
         if (this.clearCounter != null) {
+            Debug.Log("replace" + this.clearCounter + "with"+clearCounter);
             this.clearCounter.ClearKitchenObject();
         }
 
