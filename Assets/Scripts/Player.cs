@@ -65,7 +65,7 @@ public class Player : MonoBehaviour {
             if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
                 // Has ClearCounter
                 if (clearCounter != selectedCounter) {
-                    SetSelectedCounter(selectedCounter);
+                    SetSelectedCounter(clearCounter);
                 }
             } else {
                 SetSelectedCounter(null);

@@ -12,9 +12,6 @@ public class SelectedCounterVisual : MonoBehaviour {
     [SerializeField] private ClearCounter clearCounter;
     [SerializeField] private GameObject visualGameObject;
 
-    public ClearCounter ClearCounter { get => clearCounter; set => clearCounter = value; }
-    public GameObject VisualGameObject { get => visualGameObject; set => visualGameObject = value; }
-
     private void Start() {
         Player.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
     }
