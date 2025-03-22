@@ -19,79 +19,63 @@ public class Player : MonoBehaviour {
     private Vector3 lastInteractDir;
     private ClearCounter selectedCounter;
 
-    private void Awake()
-    {
-        if (Instance != null)
-        {
+    private void Awake() {
+        if (Instance != null) {
             Debug.LogError("There is more than one Player instance");
         }
+
         Instance = this;
     }
 
-    private void Start()
-    {
+    private void Start() {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
     }
 
-    private void GameInput_OnInteractAction(object sender, System.EventArgs e)
-    {
-        if (selectedCounter != null)
-        {
+    private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
+        if (selectedCounter != null) {
             selectedCounter.Interact();
         }
     }
 
-    private void Update()
-    {
+    private void Update() {
         HandleMovement();
         HandleInteractions();
     }
 
-    public bool IsWalking()
-    {
+    public bool IsWalking() {
         return isWalking;
     }
 
 
-    private void HandleInteractions()
-    {
+    private void HandleInteractions() {
         Vector2 inputVector = gameInput.GetMovementVectorNormalised();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
-        if (moveDir != Vector3.zero)
-        {
+        if (moveDir != Vector3.zero) {
             lastInteractDir = moveDir;
         }
 
         float interactDistance = 2f;
 
-        if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, counterLayerMask))
-        {
+        if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, counterLayerMask)) {
             // Identify what object player interacted with
             // Debug.Log(raycastHit.transform);
 
-            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
-            {
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
                 // Has ClearCounter
-                if (clearCounter != selectedCounter)
-                {
+                if (clearCounter != selectedCounter) {
                     SetSelectedCounter(selectedCounter);
                 }
-            }
-            else
-            {
+            } else {
                 SetSelectedCounter(null);
             }
-        }
-        else
-        {
+        } else {
             SetSelectedCounter(null);
         }
     }
 
-    private void HandleMovement()
-    {
+    private void HandleMovement() {
 
         // Keep logic separated
         Vector2 inputVector = gameInput.GetMovementVectorNormalised();
@@ -104,40 +88,32 @@ public class Player : MonoBehaviour {
         float playerHeight = 2f;
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
 
-        if (!canMove)
-        {
+        if (!canMove) {
             // Cannot move towards moveDir
             // Attempt only x movemnt
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
             canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
 
-            if (canMove)
-            {
+            if (canMove) {
                 // Can move only on the X axis
                 moveDir = moveDirX;
-            }
-            else
-            {
+            } else {
                 // Cannot move only on the X axis
 
                 // Attempt only Z movement
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
                 canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
 
-                if (canMove)
-                {
+                if (canMove) {
                     // Can move only on the Z
                     moveDir = moveDirZ;
-                }
-                else
-                {
+                } else {
                     // Cannot move in any direction
                 }
             }
         }
 
-        if (canMove)
-        {
+        if (canMove) {
             // Time.deltaTime to make movement framerate dependent
             transform.position += moveDir * moveDistance;
         }
@@ -147,12 +123,10 @@ public class Player : MonoBehaviour {
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
 
-    private void SetSelectedCounter(ClearCounter selectedCounter)
-    {
+    private void SetSelectedCounter(ClearCounter selectedCounter) {
         this.selectedCounter = selectedCounter;
 
-        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
-        {
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
             selectedCounter = this.selectedCounter
         });
     }

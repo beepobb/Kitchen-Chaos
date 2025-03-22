@@ -4,16 +4,14 @@ using UnityEngine;
 public class GameInput : MonoBehaviour {
     public event EventHandler OnInteractAction;
     private PlayerInputActions playerInputActions;
-    private void Awake()
-    {
+    private void Awake() {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Enable();
 
         playerInputActions.Player.Interact.performed += Interact_performed;
     }
 
-    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
+    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
         // OnInteractAction will be null if there are no subscribers
 
         // Same as the following code just more compact:
@@ -26,8 +24,7 @@ public class GameInput : MonoBehaviour {
     }
 
     // Be clear that output is normalised
-    public Vector2 GetMovementVectorNormalised()
-    {
+    public Vector2 GetMovementVectorNormalised() {
         // Get move input
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
 

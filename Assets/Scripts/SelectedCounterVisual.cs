@@ -12,31 +12,26 @@ public class SelectedCounterVisual : MonoBehaviour {
     [SerializeField] private ClearCounter clearCounter;
     [SerializeField] private GameObject visualGameObject;
 
-    private void Start()
-    {
-        Player.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+    public ClearCounter ClearCounter { get => clearCounter; set => clearCounter = value; }
+    public GameObject VisualGameObject { get => visualGameObject; set => visualGameObject = value; }
 
+    private void Start() {
+        Player.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
     }
 
-    private void Player_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs e)
-    {
-        if (e.selectedCounter == clearCounter)
-        {
+    private void Player_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs e) {
+        if (e.selectedCounter == clearCounter) {
             Show();
-        }
-        else
-        {
+        } else {
             Hide();
         }
     }
 
-    private void Show()
-    {
+    private void Show() {
         visualGameObject.SetActive(true);
     }
 
-    private void Hide()
-    {
+    private void Hide() {
         visualGameObject.SetActive(false);
     }
 }
