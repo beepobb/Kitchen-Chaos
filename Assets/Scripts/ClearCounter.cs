@@ -11,7 +11,6 @@ public class ClearCounter : MonoBehaviour {
 
     private void Update() {
         if (testing && Input.GetKeyDown(KeyCode.T)) {
-            Debug.Log(kitchenObject);
             if (kitchenObject != null) {
                 kitchenObject.SetClearCounter(secondClearCounter);
             }

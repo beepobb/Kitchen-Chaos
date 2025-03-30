@@ -20,11 +20,13 @@ public class KitchenObject : MonoBehaviour {
 
         if (clearCounter.HasKitchenObject()) {
             Debug.LogError("Counter already has a kitchen object");
+        } else {
+            clearCounter.SetKitchenObject(this);
+            // Teleport to other counter
+            transform.parent = clearCounter.GetKitchenObjectFollowTransform();
+            transform.localPosition = Vector3.zero;
         }
-        clearCounter.SetKitchenObject(this);
-        // Teleport to other counter
-        transform.parent = clearCounter.GetKitchenObjectFollowTransform();
-        transform.localPosition = Vector3.zero;
+            
     }
 
     public ClearCounter GetClearCounter() {
