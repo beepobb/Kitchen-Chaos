@@ -72,7 +72,8 @@ using UnityEngine.InputSystem.Utilities;
 /// }
 /// </code>
 /// </example>
-public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
+public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
+{
     /// <summary>
     /// Provides access to the underlying asset instance.
     /// </summary>
@@ -81,7 +82,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
     /// <summary>
     /// Constructs a new instance.
     /// </summary>
-    public @PlayerInputActions() {
+    public @PlayerInputActions()
+    {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerInputActions"",
     ""maps"": [
@@ -102,6 +104,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""978887f1-6479-41cb-a4e9-10be228fa537"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InteractAlternate"",
+                    ""type"": ""Button"",
+                    ""id"": ""b66cde52-fd6c-478a-9eac-92c90a2f6aa3"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -229,6 +240,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""463585af-9f19-4a47-b618-088d85321e54"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractAlternate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -239,27 +261,32 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_InteractAlternate = m_Player.FindAction("InteractAlternate", throwIfNotFound: true);
     }
 
-    ~@PlayerInputActions() {
+    ~@PlayerInputActions()
+    {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
     }
 
     /// <summary>
     /// Destroys this asset and all associated <see cref="InputAction"/> instances.
     /// </summary>
-    public void Dispose() {
+    public void Dispose()
+    {
         UnityEngine.Object.Destroy(asset);
     }
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.bindingMask" />
-    public InputBinding? bindingMask {
+    public InputBinding? bindingMask
+    {
         get => asset.bindingMask;
         set => asset.bindingMask = value;
     }
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.devices" />
-    public ReadOnlyArray<InputDevice>? devices {
+    public ReadOnlyArray<InputDevice>? devices
+    {
         get => asset.devices;
         set => asset.devices = value;
     }
@@ -268,27 +295,32 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
     public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.Contains(InputAction)" />
-    public bool Contains(InputAction action) {
+    public bool Contains(InputAction action)
+    {
         return asset.Contains(action);
     }
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.GetEnumerator()" />
-    public IEnumerator<InputAction> GetEnumerator() {
+    public IEnumerator<InputAction> GetEnumerator()
+    {
         return asset.GetEnumerator();
     }
 
     /// <inheritdoc cref="IEnumerable.GetEnumerator()" />
-    IEnumerator IEnumerable.GetEnumerator() {
+    IEnumerator IEnumerable.GetEnumerator()
+    {
         return GetEnumerator();
     }
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.Enable()" />
-    public void Enable() {
+    public void Enable()
+    {
         asset.Enable();
     }
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.Disable()" />
-    public void Disable() {
+    public void Disable()
+    {
         asset.Disable();
     }
 
@@ -296,12 +328,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
     public IEnumerable<InputBinding> bindings => asset.bindings;
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.FindAction(string, bool)" />
-    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false) {
+    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
+    {
         return asset.FindAction(actionNameOrId, throwIfNotFound);
     }
 
     /// <inheritdoc cref="UnityEngine.InputSystem.InputActionAsset.FindBinding(InputBinding, out InputAction)" />
-    public int FindBinding(InputBinding bindingMask, out InputAction action) {
+    public int FindBinding(InputBinding bindingMask, out InputAction action)
+    {
         return asset.FindBinding(bindingMask, out action);
     }
 
@@ -310,10 +344,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_InteractAlternate;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
-    public struct PlayerActions {
+    public struct PlayerActions
+    {
         private @PlayerInputActions m_Wrapper;
 
         /// <summary>
@@ -328,6 +364,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/InteractAlternate".
+        /// </summary>
+        public InputAction @InteractAlternate => m_Wrapper.m_Player_InteractAlternate;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -350,7 +390,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
         /// <seealso cref="PlayerActions" />
-        public void AddCallbacks(IPlayerActions instance) {
+        public void AddCallbacks(IPlayerActions instance)
+        {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
@@ -359,6 +400,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @InteractAlternate.started += instance.OnInteractAlternate;
+            @InteractAlternate.performed += instance.OnInteractAlternate;
+            @InteractAlternate.canceled += instance.OnInteractAlternate;
         }
 
         /// <summary>
@@ -368,20 +412,25 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
         /// <seealso cref="PlayerActions" />
-        private void UnregisterCallbacks(IPlayerActions instance) {
+        private void UnregisterCallbacks(IPlayerActions instance)
+        {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @InteractAlternate.started -= instance.OnInteractAlternate;
+            @InteractAlternate.performed -= instance.OnInteractAlternate;
+            @InteractAlternate.canceled -= instance.OnInteractAlternate;
         }
 
         /// <summary>
         /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />.
         /// </summary>
         /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-        public void RemoveCallbacks(IPlayerActions instance) {
+        public void RemoveCallbacks(IPlayerActions instance)
+        {
             if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
@@ -395,7 +444,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
         /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
         /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
         /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-        public void SetCallbacks(IPlayerActions instance) {
+        public void SetCallbacks(IPlayerActions instance)
+        {
             foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
@@ -411,7 +461,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
     /// </summary>
     /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
     /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-    public interface IPlayerActions {
+    public interface IPlayerActions
+    {
         /// <summary>
         /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -426,5 +477,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable {
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "InteractAlternate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteractAlternate(InputAction.CallbackContext context);
     }
 }

@@ -1,40 +1,30 @@
 using UnityEngine;
 
-public class ClearCounter : MonoBehaviour, IKitchenObjectParent {
+public class ClearCounter : BaseCounter {
     // Can use GameObject too
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
-    [SerializeField] private Transform counterTopPoint;
-
-    private KitchenObject kitchenObject;
     
-    public void Interact(Player player) {
-        if(kitchenObject == null) {
-            Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab, counterTopPoint); // Spawn the tomato
-            kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(this);
+    public override void Interact(Player player) {
+        // pick up and drop items
+        // check if counter is empty before drop
+        if (!HasKitchenObject()) {
+            // There is no KitchenObject here
+            if (player.HasKitchenObject()) { 
+                // Player is carrying something
+                player.GetKitchenObject().SetKitchenObjectParent(this);
+            } else {
+                // Player not carrying anything
+            }
         } else {
-            // Give the object to the player
-            kitchenObject.SetKitchenObjectParent(player);
-            Debug.Log(kitchenObject.GetKitchenObjectParent());
+            // There is a KitchenObject here
+            if (player.HasKitchenObject()) {
+                // Player is carrying something
+            } else {
+                // Player is not carrying anything
+                // Give Player the KitchenObject
+                GetKitchenObject().SetKitchenObjectParent(player);
+            }
+                
         }
-    }
-
-    public Transform GetKitchenObjectFollowTransform() {
-        return counterTopPoint;
-    }
-
-    public void SetKitchenObject(KitchenObject kitchenObject) {
-        this.kitchenObject = kitchenObject;
-    }
-
-    public KitchenObject GetKitchenObject() {
-        return kitchenObject;
-    }
-
-    public void ClearKitchenObject() {
-        kitchenObject = null; 
-    }
-
-    public bool HasKitchenObject() {
-        return kitchenObject != null;
     }
 }
