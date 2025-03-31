@@ -2,8 +2,8 @@
 Unity 3D game inspired by Overcooked! based on [Code Monkey's tutorial on Youtube](https://www.youtube.com/watch?v=AmGSEH7QcDg)
 
 ## Current Progress
-Date: 31 March 2025
-Current Progress: Lecture 24 - Look At Camera
+**Date**: 31 March 2025 <br>
+**Current Progress**: Lecture 24 - Look At Camera
 
 ### Progress Video
 <p align="center">
